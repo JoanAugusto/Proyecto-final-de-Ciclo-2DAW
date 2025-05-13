@@ -1,60 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-    <link rel="stylesheet" href="/OrderFlow Proyecto Ciclo 2ºDAW/Frontend/css/camarerovista.css">
-   
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vista Camarero</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link rel="stylesheet" href="/OrderFlow Proyecto Ciclo 2ºDAW/Frontend/css/camarerovista.css">
 </head>
-<body>
-    <div class="  ">
-        <nav class="navbar bg-warning  d-flex  ">
-            <div >
-              <span class="navbar-brand mb-0 h1">Navbar </span>
-            </div>
+<body class="image-font-start"> <!-- Usas tu clase con imagen de fondo -->
 
-            <div class=" bg-danger">
-                <p class="h5 ">Nombre Usuario</p>
-            </div>
-            <div class=" bg-danger">
-                <button class="btn btn-outline-primary navbar-toggler " data-bs-toggle="offcanvas" data-bs-target="#offcanvas"> <img class="navbar-toggler-icon" ></button>
-            </div>
+  <!-- Navbar -->
+  <nav class="navbar bg-warning d-flex justify-content-between align-items-center px-3">
+    <img src="/Logo Empresa/OrderFlow.png" class="rounded-circle" style="width: 60px;" alt="LogoEmpresa">
+    <span class="h5 mb-0 text-dark">OrderFlow</span>
+    <button class="btn btn-outline-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
 
-        </nav>
-        <div class=" offcanvas  offcanvas-end d-flex align-items-center "  id="offcanvas" aria-labelledby="offcanvas">
-            <div class="offcanvas-header d-flex justify-content-around align-items-center ">
-            <img class=" rounded-3 w-25 me-3" src="/OrderFlow Proyecto Ciclo 2ºDAW/assets/image/backiee-89014.jpg" alt="">
-              <h6 class="offcanvas-title" id="offcanvas">Nombre Usuario</h6>
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body bg-success w-75 d-flex flex-column align-items-center ">
-              <section class="bg-primary  w-75 option-offcanvas mb-4 d-flex justify-content-center align-items-center">
-                <a href="./camareroVista.html" class="fs-4">Inicio</a>
-              </section>
-                <section class="bg-primary w-75 option-offcanvas mb-4 d-flex justify-content-center align-items-center">
-                    <a href="./seccionesCamarero/seccionMesasCamarero.html" class="fs-4 text-center text-black">Seccion de Mesas</a>
-                </section>
-                    <section class="bg-primary w-75 option-offcanvas mb-5 d-flex justify-content-center align-items-center">
-                        <a href="./seccionesCamarero/seccionComandasCamarero.html" class="fs-4 text-center">Seccion de Comandas</a>
-                    </section>
-                        <section class="bg-primary w-75 option-offcanvas mt-5 d-flex justify-content-center align-items-center">
-                            <img  src="/OrderFlow Proyecto Ciclo 2ºDAW/assets/icons/logout_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="">
-                            <p class=" h3 text-center ">LogOut</p>
-                        </section>
-            </div>
-
-        </div>
-
-          <div class=" image-font-start d-flex flex-column justify-content-center align-items-center">
-                <p class="h3 text-white text-center mb-3">Bienvenido nombre Usuario</p>
-                <p class="h4 text-white text-center mb-3">Pulsa el boton superior derecha</p>
-                <p class="h5 text-white text-center mb-3">para acceder a las funciones de la app</p>
-          </div>
-
-         
+  <!-- Offcanvas más grande -->
+  <div class="offcanvas offcanvas-end offcanvas-lg" tabindex="-1" id="offcanvas">
+    <div class="offcanvas-header">
+      <img src="/OrderFlow Proyecto Ciclo 2ºDAW/assets/image/backiee-89014.jpg" class="rounded w-25 me-3" alt="Usuario">
+      <h6 class="offcanvas-title">Nombre Usuario</h6>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+    <div class="offcanvas-body bg-light d-flex flex-column align-items-center">
+      <a href="./camareroVista.html" class="btn btn-primary w-75 mb-3 fs-5">Inicio</a>
+      <a href="./seccionesCamarero/seccionMesasCamarero.html" class="btn btn-primary w-75 mb-3 fs-5">Sección de Mesas</a>
+      <a href="./seccionesCamarero/seccionComandasCamarero.html" class="btn btn-primary w-75 mb-5 fs-5">Sección de Comandas</a>
+      <div class="d-flex align-items-center gap-2 mt-4">
+        <img src="/OrderFlow Proyecto Ciclo 2ºDAW/assets/icons/logout_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+        <p class="h5 mb-0">LogOut</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bienvenida -->
+  <div class="container  text-white text-center mt-5">
+    <h3 class="mb-3">Bienvenido Nombre Usuario</h3>
+    <h4 class="mb-2">Pulsa el botón de arriba a la derecha</h4>
+    <p class="fs-5">para acceder a las funciones de la app</p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
