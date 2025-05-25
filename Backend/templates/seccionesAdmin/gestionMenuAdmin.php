@@ -111,11 +111,8 @@
       <thead class="table-dark ">
         <tr>
           <th>ID</th>
-          <th>Nombre Producto</th>
-          <th>Precio Producto</th>
-           <th>Descripcion Producto</th>
-            <th>Tipo</th>
-             <th>ID Categoria</th>
+          <th>Nombre Categoria</th>
+          
           
           <th>Acciones </th>
           
@@ -123,30 +120,26 @@
       </thead>
       <tbody>
             <?php 
-                $productos=load_productos($conn);
+                $categoriasMenu=load_menus($conn);
 
-                if($productos === false){
+                if($categoriasMenu === false){
                    echo "<div class='alert alert-danger text-center'>Error al conectar con la base de datos</div>"; 
                 }else{
                     
                  
-                        foreach($productos as $productitos => $valorCamposProducto){
-                          $urlModificarProducto="../gestionProductoAdminModificar.php?id_producto=".$valorCamposProducto['id_producto'];
+                        foreach($categoriasMenu as $mensitos => $valorCamposMenu){
+                          $urlModificarMenu="../gestionMenuAdminModificar.php?id_categoria=".$valorCamposMenu['id_categoria'];
                         //   require_once '../gestionMesaAdminModificar.php';
-                          $urlEliminarProducto="../eliminarProductoAdmin.php?id_producto=".$valorCamposProducto['id_producto'];
+                          $urlEliminarMenu="../eliminarMenuAdmin.php?id_categoria=".$valorCamposMenu['id_categoria'];
                           echo "<tr>";
-                                echo " <td>".htmlspecialchars($valorCamposProducto["id_producto"])."</td>";
-                                echo " <td>".htmlspecialchars($valorCamposProducto["nombre_producto"])."</td>";
-                                echo " <td>".htmlspecialchars($valorCamposProducto["precio_producto"])."</td>";
-                                 echo " <td>".htmlspecialchars($valorCamposProducto["descripcion_producto"])."</td>";
-                                echo " <td>".htmlspecialchars($valorCamposProducto["tipo"])."</td>";
-                                 echo " <td>".htmlspecialchars($valorCamposProducto["nombre_categoria"])."</td>";
+                                echo " <td>".htmlspecialchars($valorCamposMenu["id_categoria"])."</td>";
+                                echo " <td>".htmlspecialchars($valorCamposMenu["nombre_categoria"])."</td>";
                                 
                                
                                
                                 echo"<td>";
-                                    echo"<a href='" . $urlModificarProducto . "' class=btn btn-sm btn-warning>Editar</a>";
-                                    echo"<a  href='" . $urlEliminarProducto . "' class=btn btn-sm btn-danger>Eliminar</a>";
+                                    echo"<a href='" . $urlModificarMenu . "' class=btn btn-sm btn-warning>Editar</a>";
+                                    echo"<a  href='" . $urlEliminarMenu . "' class=btn btn-sm btn-danger>Eliminar</a>";
                                 echo"</td>";
 
                             echo "</tr>";
@@ -161,7 +154,7 @@
     </table>
     <?php 
          echo "<div class='text-center mt-4'>";
-                        echo "<a href='../añadirProductoAdmin.php' class='btn btn-success'>Añadir Producto</a>";
+                        echo "<a href='../añadirMenuAdmin.php' class='btn btn-success'>Añadir Menu</a>";
                     echo "</div>";
                    
     ?>

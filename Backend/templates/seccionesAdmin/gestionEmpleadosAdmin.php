@@ -1,6 +1,8 @@
 <?php 
     include '../conectionDB.php';
     include '../includes/OrderFlowBDAdmin.php';
+    
+    
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -30,13 +32,16 @@
     <div class="collapse navbar-collapse justify-content-center d-none d-lg-flex">
       <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item px-3">
-          <a class="nav-link active" href="#">Gestión de Mesas</a>
+          <a class="nav-link active" href="./gestionMesasAdmin.php">Gestión de Mesas</a>
         </li>
         <li class="nav-item px-3">
-          <a class="nav-link" href="#">Productos</a>
+          <a class="nav-link" href="./gestionProductosAdmin.php">Gestión de Productos</a>
         </li>
         <li class="nav-item px-3">
-          <a class="nav-link" href="#">Empleados</a>
+          <a class="nav-link active" href="./gestionMenuAdmin.php">Gestión de Menu</a>
+        </li>
+        <li class="nav-item px-3">
+          <a class="nav-link" href="./gestionEmpleadosAdmin.php">Gestión de Empleados</a>
         </li>
       </ul>
     </div>
@@ -57,13 +62,16 @@
   <div class="offcanvas-body">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link active" href="#">Gestión de Mesas</a>
+        <a class="nav-link active" href="./gestionMesasAdmin.php">Gestión de Mesas</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Productos</a>
+        <a class="nav-link" href="./gestionProductosAdmin.php"> Gestión de Productos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Empleados</a>
+        <a class="nav-link active" href="./gestionMenuAdmin.php">Gestión de Menu</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="./gestionEmpleadosAdmin.php">Gestión de Empleados</a>
       </li>
       <li class="nav-item mt-3">
         <a href="logout.php" class="btn btn-danger w-100">Cerrar sesión</a>
@@ -123,7 +131,7 @@
                     
                  
                         foreach($empleados as $empleaditos => $valorCampos){
-                          $urlModificarEmpleado="";
+                          $urlModificarEmpleado="../gestionEmpleadosAdminModificar.php?id_empleado=".$valorCampos['id_empleado'];
                           $urlEliminarEmpleado="../eliminarEmpleadoAdmin.php?id_empleado=".$valorCampos['id_empleado'];
                           echo "<tr>";
                                 echo " <td>".htmlspecialchars($valorCampos["id_empleado"])."</td>";
@@ -134,11 +142,12 @@
                                 echo " <td>".htmlspecialchars($valorCampos["rol_empleado"])."</td>";
                                
                                 echo"<td>";
-                                    echo"<a  class=btn btn-sm btn-warning>Editar</a>";
+                                    echo"<a href='" . $urlModificarEmpleado . "' class=btn btn-sm btn-warning>Editar</a>";
                                     echo"<a  href='" . $urlEliminarEmpleado . "' class=btn btn-sm btn-danger>Eliminar</a>";
                                 echo"</td>";
 
                             echo "</tr>";
+                         
                         }
                     
                 }
@@ -147,6 +156,12 @@
        
       </tbody>
     </table>
+    <?php 
+         echo "<div class='text-center mt-4'>";
+                        echo "<a href='../añadirEmpleadoAdmin.php' class='btn btn-success'>Añadir Empleado</a>";
+                    echo "</div>";
+                   
+    ?>
   </div>
 </div>
 
