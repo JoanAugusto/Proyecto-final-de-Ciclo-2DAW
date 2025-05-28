@@ -1,3 +1,9 @@
+<?php
+  include_once '../includes/conectionDB.php';
+  include_once '../includes/orderFlowBD.php';
+   
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -41,39 +47,56 @@
   <h2 class="text-center mb-4">ZONA DE MESAS</h2>
 
   <!-- Scroll horizontal de zonas -->
-  <div class="d-flex flex-nowrap overflow-auto mb-4 px-2">
-    <button class="btn btn-outline-warning me-3 px-4 py-2 fs-5 rounded-pill flex-shrink-0">Zona Interior</button>
-    <button class="btn btn-outline-warning me-3 px-4 py-2 fs-5 rounded-pill flex-shrink-0">Terraza</button>
-    <button class="btn btn-outline-warning me-3 px-4 py-2 fs-5 rounded-pill flex-shrink-0">Zona VIP</button>
-    <button class="btn btn-outline-warning me-3 px-4 py-2 fs-5 rounded-pill flex-shrink-0">Reservado</button>
-    <button class="btn btn-outline-warning me-3 px-4 py-2 fs-5 rounded-pill flex-shrink-0">Salón 1</button>
-    <button class="btn btn-outline-warning me-3 px-4 py-2 fs-5 rounded-pill flex-shrink-0">Salón 2</button>
-    <!-- Añade más zonas si quieres -->
-  </div>
+  
+        <form id="formZona" class="container d-flex justify-content-center" method="POST"> 
+          <input type="hidden" name="zona_seleccionada" id="zonaSeleccionadaInput">
+            <div class="d-flex flex-nowrap overflow-auto mb-4 px-2">
+                  <?php
+                  $zonasMesas = load_zona_mesa_not_repeater($conn);
+                  if ($zonasMesas === false) {
+                      echo "<div class='alert alert-danger text-center'>Error al conectar con la base de datos</div>"; 
+                  } else {
+                      foreach ($zonasMesas as $valorZona) {
+                          $zona = htmlspecialchars($valorZona['zona_mesa']);
+                          echo "<button type='submit' name='zona_seleccionada' value='$zona' class='btn btn-outline-warning me-3 px-4 py-2 fs-5 rounded-pill flex-shrink-0'>$valorZona[zona_mesa]</button>";
+                      }
+                  }
+                  ?>
+              </div>
+    </form>
 
   <!-- MESAS -->
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-    <!-- Ejemplo mesa disponible -->
-    <div class="col">
-      <div class="card text-center shadow-sm border-success" style="border-radius: 1.5rem;">
-        <div class="card-body">
-          <h5 class="card-title">Mesa 1</h5>
-          <p class="card-text text-success">Disponible</p>
-          <button class="btn btn-outline-success">Seleccionar</button>
-        </div>
-      </div>
-    </div>
+   
+      <?php
+          if($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['zona_seleccionada'])){
+            $zonaSeleccionada=$_POST['zona_seleccionada'];
+
+            $mesasZona=load_mesa_por_zona($conn,$zonaSeleccionada);
+
+            if($mesasZona===false){
+              echo "<div class='alert alert-danger text-center'>Error al conectar con la base de datos</div>";
+            }else{
+              foreach($mesasZona as $zonamesitas){
+                $urlMesaID="./zonaApuntaComandas.php?id_mesa=".$zonamesitas['id_mesa'];
+                
+                echo"<div class='col'>
+                      <div class='card text-center shadow-sm border-success' style='border-radius: 1.5rem;'>
+                        <div class='card-body'>
+                          <h5 class='card-title'>Mesa $zonamesitas[id_mesa]</h5>
+                          <p class='card-text text-success'>$zonamesitas[estado_mesa]</p>
+                          <a href='".$urlMesaID."' class='btn btn-outline-success'>Seleccionar</a>
+                        </div>
+                      </div>
+                    </div>";
+              }
+            }
+          }
+      ?>
+    
 
     <!-- Ejemplo mesa ocupada -->
-    <div class="col">
-      <div class="card text-center shadow-sm border-danger" style="border-radius: 1.5rem;">
-        <div class="card-body">
-          <h5 class="card-title">Mesa 2</h5>
-          <p class="card-text text-danger">Ocupada</p>
-          <button class="btn btn-outline-secondary" disabled>Ocupada</button>
-        </div>
-      </div>
-    </div>
+    
   </div>
 </div>
 

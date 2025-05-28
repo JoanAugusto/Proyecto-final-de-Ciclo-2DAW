@@ -27,14 +27,15 @@
     </div>
     <div class="offcanvas-body bg-light d-flex flex-column align-items-center">
       <a href="./camareroVista.html" class="btn btn-primary w-75 mb-3 fs-5">Inicio</a>
-      <a href="./seccionesCamarero/seccionMesasCamarero.html" class="btn btn-primary w-75 mb-3 fs-5">Sección de Mesas</a>
-      <a href="./seccionesCamarero/seccionComandasCamarero.html" class="btn btn-primary w-75 mb-5 fs-5">Sección de Comandas</a>
+      <a href="./seccionesCamarero/seccionMesasCamarero.php" class="btn btn-primary w-75 mb-3 fs-5">Sección de Mesas</a>
+      <a href="./seccionesCamarero/seccionComandasCamarero.php" class="btn btn-primary w-75 mb-5 fs-5">Sección de Comandas</a>
       <div class="d-flex align-items-center gap-2 mt-4">
         <img src="/OrderFlow Proyecto Ciclo 2ºDAW/assets/icons/logout_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="">
         <p class="h5 mb-0">LogOut</p>
       </div>
     </div>
   </div>
+  
 
   <!-- Bienvenida -->
   <div class="container  text-white text-center mt-5">
