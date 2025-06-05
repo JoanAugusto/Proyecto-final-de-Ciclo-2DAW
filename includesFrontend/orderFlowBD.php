@@ -224,6 +224,31 @@
     // CAMBIO AQUÍ: fetch en lugar de fetchAll para que te devuelva un solo producto, no un array de arrays
     return $resultado->fetch(PDO::FETCH_ASSOC);
 }
+
+
+    function load_productos_tipo_segun_id($conn,$id_producto){
+        $consultaProductosTipo="SELECT tipo_producto FROM producto WHERE id_producto = '".$id_producto."';";
+        
+        $resultadoProductosTipo=$conn->query($consultaProductosTipo);
+
+            if(!$resultadoProductosTipo || $resultadoProductosTipo->rowCount() === 0){
+                return FALSE;
+            }
+          return $resultadoProductosTipo->fetchAll(PDO::FETCH_ASSOC);   
+    }
+    function add_producto_linea_Comanda($conn,$IDComanda,$IDProducto,$cantidadProducto,$TipoProducto){
+        $añadirLineas = "
+            INSERT INTO linea_comanda (tipo_lineacomanda, numero_lineas, unidades, id_producto, id_comanda)
+            VALUES ('$TipoProducto', 1, $cantidadProducto, $IDProducto, $IDComanda)
+        ";
+        
+        $lanzarPeticionLinea=$conn->query($añadirLineas);
+
+            if(!$lanzarPeticionLinea || $lanzarPeticionLinea->rowCount() === 0){
+                return FALSE;
+            }
+          return True;   
+    }
     function load_productos_segun_menu($conn,$id_categorias){
         $consultaProductosCategorias="SELECT * FROM producto WHERE id_categoria='".$id_categorias."'";
         
@@ -273,5 +298,65 @@
                 return $id_comanda; // Devolver ID comanda activa o recién creada
             }
 
+                // LINEA COMANDA
+
+                function load_lineas_comanda_con_productos($conn, $id_comanda){
+                $consulta = "
+                    SELECT 
+                        lc.id_lineacomanda,
+                        lc.tipo_lineacomanda,
+                        lc.numero_lineas,
+                        lc.unidades,
+                        lc.estado_lineacomanda,
+                        p.nombre_producto,
+                        p.precio_producto,
+                        p.descripcion_producto
+                    FROM 
+                        linea_comanda lc
+                    INNER JOIN 
+                        producto p ON lc.id_producto = p.id_producto
+                    WHERE 
+                        lc.id_comanda = '$id_comanda';
+                ";
+
+                $resultado = $conn->query($consulta);
+
+                if (!$resultado || $resultado->rowCount() === 0) {
+                    return false;
+                }
+
+                return $resultado->fetchAll(PDO::FETCH_ASSOC);
+            }
+
+        // FUNCIONES PRODUCTOS
+
+        function load_producto_linea_Comanda_Segun_id_producto($conn,$id_producto){
+            $consultaObtenerProductos="
+                SELECT 
+                    lc.id_lineacomanda,
+                    lc.tipo_lineacomanda,
+                    lc.unidades,
+                    lc.estado_lineacomanda,
+                    p.nombre_producto,
+                    p.descripcion_producto
+
+                FROM
+                    linea_comanda lc
+                INNER JOIN
+                    producto p ON lc.id_producto = p.id_producto
+                WHERE
+                    lc.id_producto = '$id_producto';
+            
+            
+            ";
+
+            $resultadoObtenerProductos= $conn->query($consultaObtenerProductos);
+
+            if(!$resultadoObtenerProductos || $resultadoObtenerProductos->rowCount()===0){
+                return false;
+            }
+
+            return $resultadoObtenerProductos->fetchAll(PDO::FETCH_ASSOC);
+        }
 ?>
 

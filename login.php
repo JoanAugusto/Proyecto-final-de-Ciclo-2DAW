@@ -12,6 +12,7 @@
         session_start();
         $_SESSION['correo_empleado'] = $sistemaLogin['correo_empleado'];
         $_SESSION['rol_empleado'] = $sistemaLogin['rol_empleado'];
+        $_SESSION['nombre_empleado']=$sistemaLogin['nombre_empleado'];
         $_SESSION['id_empleado']=$sistemaLogin['id_empleado'];
         
 
