@@ -157,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_producto'], $_POS
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script src="../Frontend/js/contador.js"></script>
+<script src="../js/contador.js"></script>
 
 </body>
 </html>
