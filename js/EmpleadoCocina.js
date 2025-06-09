@@ -2,12 +2,13 @@
 // Así podemos tener varias comandas activas a la vez sin que se mezclen.
 const comandasPorId = {};
 
-const datosGuardados = localStorage.getItem('comandasBarra');
+const datosGuardados = localStorage.getItem('comandasCocina');
 if (datosGuardados) {
   const datos = JSON.parse(datosGuardados);
   Object.assign(comandasPorId, datos); // Copia los datos al objeto actual
-  mostrarComandasBarra(comandasPorId); // Los muestra al arrancar
+  mostrarComandasCocina(comandasPorId); // Los muestra al arrancar
 }
+
 // Nos conectamos al servidor WebSocket que corre en el puerto 8080 en local.
 // Esto es lo que nos permite recibir las comandas en tiempo real.
 const socket = new WebSocket('ws://localhost:8080');
@@ -18,7 +19,7 @@ socket.addEventListener('open', () => {
   
   // Le enviamos un mensaje al servidor para decirle que esta parte del programa es la "barra".
   // Así el servidor sabe a quién tiene que mandar las comandas.
-  socket.send(JSON.stringify({ tipo: 'identificacion', categoria: 'barra' }));
+  socket.send(JSON.stringify({ tipo: 'identificacion', categoria: 'cocina' }));
 });
 
 // Cada vez que recibimos un mensaje del servidor...
@@ -31,7 +32,7 @@ socket.addEventListener('message', (event) => {
     console.log('Mensaje parseado:', data);
 
     // Si el mensaje es para la barra, y viene con una comanda que es un array con al menos una línea...
-    if (data.tipo === 'barra' && Array.isArray(data.comanda) && data.comanda.length > 0) {
+    if (data.tipo === 'cocina' && Array.isArray(data.comanda) && data.comanda.length > 0) {
       
       // Cogemos el ID de la comanda desde la primera línea (todas las líneas tienen el mismo ID).
       const idComanda = data.comanda[0].id_comanda;
@@ -40,16 +41,16 @@ socket.addEventListener('message', (event) => {
       // Así, si llega otra con el mismo ID, se actualiza.
       comandasPorId[idComanda] = data.comanda;
 
-       //Lo guardaremos dentro del local Storage Debido a que se guardan en un array de objetos , debemos hacer esto cuando cambiamos de pagina
+      //Lo guardaremos dentro del local Storage Debido a que se guardan en un array de objetos , debemos hacer esto cuando cambiamos de pagina
       localStorage.setItem('comandasCocina', JSON.stringify(comandasPorId));
 
 
       // Llamamos a una función que se encarga de mostrar en pantalla todas las comandas.
-      mostrarComandasBarra(comandasPorId);
+      mostrarComandasCocina(comandasPorId);
     
     } else {
       // Si el mensaje no era para barra, lo avisamos por consola.
-      console.log('No es “barra”, es:', data.tipo);
+      console.log('No es “cocina”, es:', data.tipo);
     }
 
   } catch (e) {
@@ -73,9 +74,9 @@ socket.addEventListener('error', (err) => {
 
 // Esta función es la que pinta las comandas en el contenedor de la barra (HTML).
 // Recibe un objeto donde cada clave es un ID de comanda, y su valor es un array con las líneas de esa comanda.
-function mostrarComandasBarra(comandasObj) {
+function mostrarComandasCocina(comandasObj) {
   // Pillamos el contenedor del HTML donde se van a meter todas las comandas.
-  const container = document.getElementById('comandas-barra');
+  const container = document.getElementById('comandas-cocina');
 
   // Limpiamos el contenedor antes de meter nuevas comandas, así no se repite todo.
   container.innerHTML = '';

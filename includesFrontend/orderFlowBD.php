@@ -308,6 +308,7 @@
                         lc.numero_lineas,
                         lc.unidades,
                         lc.estado_lineacomanda,
+                        lc.id_comanda,
                         p.nombre_producto,
                         p.precio_producto,
                         p.descripcion_producto
