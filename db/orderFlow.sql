@@ -1,4 +1,4 @@
-drop database if exists orderflowdb;
+  drop database if exists orderflowdb;
 create database orderflowdb;
 use orderflowdb;
 -- Tabla empleado

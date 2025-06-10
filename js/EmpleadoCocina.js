@@ -41,9 +41,7 @@ socket.addEventListener('message', (event) => {
       // Así, si llega otra con el mismo ID, se actualiza.
       comandasPorId[idComanda] = data.comanda;
 
-      //Lo guardaremos dentro del local Storage Debido a que se guardan en un array de objetos , debemos hacer esto cuando cambiamos de pagina
-      localStorage.setItem('comandasCocina', JSON.stringify(comandasPorId));
-
+       
 
       // Llamamos a una función que se encarga de mostrar en pantalla todas las comandas.
       mostrarComandasCocina(comandasPorId);
@@ -103,6 +101,7 @@ function mostrarComandasCocina(comandasObj) {
           <table class="table table-hover align-middle text-center">
             <thead class="table-light">
               <tr>
+              <th scope="col">Seleccionar</th>
                 <th scope="col">🍽 Producto</th>
                 <th scope="col">🔢 Unidades</th>
                 <th scope="col">📝 Observaciones</th>
@@ -115,6 +114,7 @@ function mostrarComandasCocina(comandasObj) {
     lineas.forEach(linea => {
       cuerpo += `
         <tr>
+          <td><input type="checkbox" class="check-linea" data-id_linea="${linea. id_lineacomanda}" value="${linea. id_lineacomanda}" ></td>
           <td>${linea.nombre_producto}</td>
           <td>${linea.unidades}</td>
           <td>${linea.descripcion_producto || 'Ninguna'}</td>
@@ -127,6 +127,11 @@ function mostrarComandasCocina(comandasObj) {
             </tbody>
           </table>
         </div>
+        <div class="container-fluid d-flex justify-content-center gap-2">
+              <button class="btn btn-outline-warning" id="btn-en-cola">En Cola</button>
+              <button class="btn btn-outline-danger" id="btn-preparando">Preparando</button>
+              <button class="btn btn-outline-success"  id="btn-finalizado">Finalizado</button>
+        </div>
       </div>
     `;
 
@@ -137,3 +142,43 @@ function mostrarComandasCocina(comandasObj) {
     container.appendChild(card);
   }
 }
+
+//Apartado de cambio de estado 
+
+document.getElementById('comandas-cocina').addEventListener('click', (event) => {
+  if (['btn-en-cola', 'btn-preparando', 'btn-finalizado'].includes(event.target.id)) {
+    let nuevoEstado;
+
+    switch(event.target.id) {
+      case 'btn-en-cola':
+         nuevoEstado = 'cola';
+          break;
+      case 'btn-preparando': 
+      nuevoEstado = 'preparando';
+       break;
+      case 'btn-finalizado': 
+      nuevoEstado = 'finalizado'; 
+      break;
+    }
+
+    // Recogemos todos los checkboxes seleccionados
+    const checkboxes = document.querySelectorAll('.check-linea:checked');
+
+    if (checkboxes.length === 0) {
+      alert('Selecciona al menos una línea para cambiar el estado.');
+      return;
+    }
+
+    // Obtenemos los ids de las líneas seleccionadas
+    const idsSeleccionados = Array.from(checkboxes).map(chk => chk.value);
+
+    console.log('Cambiar estado a:', nuevoEstado, 'en líneas:', idsSeleccionados);
+
+    // Aquí pones tu lógica para cambiar el estado, por ejemplo enviar por WebSocket
+    // socket.send(JSON.stringify({ tipo: 'cambiar_estado', ids: idsSeleccionados, estado: nuevoEstado }));
+
+    // También puedes actualizar localmente o llamar a otra función que refresque la UI.
+  }
+});
+
+
