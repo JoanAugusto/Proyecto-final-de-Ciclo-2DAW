@@ -13,9 +13,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
-<body class="bg-light">
+<body class="bg-light d-flex flex-column ">
 
 <?php include '../includesFrontend/Navbar.php'; ?>
+
 
 <?php 
     $id = $_GET['id_mesa'] ?? null;
@@ -144,17 +145,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_producto'], $_POS
 
 <!-- Resumen -->
 <div class="container my-4">
-    <div class="d-flex justify-content-between align-items-center border rounded p-3 bg-white">
-        <div>
-            <div class="fw-bold">Items: 3</div>
-            <div class="text-success">Total: €7.50</div>
-        </div>
+    <div class="d-flex justify-content-around align-items-center border rounded p-3 bg-white">
+    <?php
+                $lineas = load_lineas_comanda_con_productos($conn, $id_comanda);
+                $totalItems = count($lineas ?: []);
+                // Para calcular total a pagar, podrías hacer un sumatorio real:
+                $totalPagar = 0;
+                if ($lineas !== FALSE) {
+                    foreach ($lineas as $lc) {
+                        $totalPagar += $lc['precio_producto'] * $lc['unidades'];
+                    }
+                }
+                echo "
+                     <div class='fw-bold'>Items: $totalItems</div><br/>
+                    <div class='text-success'>Total:".number_format($totalPagar,2)."€ </div>";
+                
+                ?>
+    
+       
         <a href="./resumenComanda.php?id_mesa=<?php echo $id; ?>&id_empleado=<?php echo $CamareroID; ?>&id_comanda=<?php echo $id_comanda; ?>" class="btn btn-warning rounded-pill px-4 fw-semibold">
             Continuar
         </a>
     </div>
-</div>
-
+    </div>
+ </div>
+  </div>
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="../js/contador.js"></script>

@@ -24,7 +24,7 @@
                 header("Location: ./templates/camareroVista.php");
                 break;
             case 'barra':
-                header("Location: ./templates/barraVista.html");
+                header("Location: ./templates/barraVista.php");
                 break;
             case 'cocinero':
                 header("Location: ./templates/cocinaVista.html");

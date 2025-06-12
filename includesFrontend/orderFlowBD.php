@@ -359,5 +359,60 @@
 
             return $resultadoObtenerProductos->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        function load_comandas_segun_zona_mesa($conn, $zonaMesa) {
+    $zonaMesa = $conn->quote($zonaMesa);
+
+    // 1. Sacamos las comandas de esa zona
+    $consultaComandaMesa = "
+        SELECT 
+            comanda.id_comanda,
+            comanda.estado_comanda,
+            comanda.fecha_hora,
+            comanda.id_empleado,
+            mesa.id_mesa,
+            mesa.zona_mesa
+        FROM comanda
+        JOIN mesa ON comanda.id_mesa = mesa.id_mesa
+        WHERE mesa.zona_mesa = $zonaMesa
+    ";
+
+    $resultadoComandaMesa = $conn->query($consultaComandaMesa);
+
+    if (!$resultadoComandaMesa || $resultadoComandaMesa->rowCount() === 0) {
+        return false;
+    }
+
+    $comandas = $resultadoComandaMesa->fetchAll(PDO::FETCH_ASSOC);
+
+    // 2. Para cada comanda, sacamos sus productos asociados
+    foreach ($comandas as &$comanda) {
+        $idComanda = $comanda['id_comanda'];
+
+        $consultaProductos = "
+            SELECT 
+                producto.nombre_producto,
+                producto.tipo,
+                producto.precio_producto,
+                producto.descripcion_producto,
+                linea_comanda.unidades,
+                linea_comanda.estado_lineacomanda
+            FROM linea_comanda
+            JOIN producto ON linea_comanda.id_producto = producto.id_producto
+            WHERE linea_comanda.id_comanda = $idComanda
+        ";
+
+        $resultadoProductos = $conn->query($consultaProductos);
+
+        if ($resultadoProductos && $resultadoProductos->rowCount() > 0) {
+            $comanda['productos'] = $resultadoProductos->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            $comanda['productos'] = [];
+        }
+    }
+
+    return $comandas;
+}
+
 ?>
 

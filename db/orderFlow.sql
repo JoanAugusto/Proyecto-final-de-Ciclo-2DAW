@@ -71,17 +71,7 @@ CREATE TABLE linea_comanda (
     FOREIGN KEY (id_comanda) REFERENCES comanda(id_comanda) ON DELETE CASCADE
 );
 
--- trigger
-delimiter //
-create trigger set_tipo_lineacomanda before insert on linea_comanda
-for each row
-begin
-    declare tipoprod enum('barra','cocina');
-    select tipo into tipoprod from producto where id_producto = new.id_producto;
-    set new.tipo_lineacomanda = tipoprod;
-end;
-//
-delimiter ;
+
 
 
 

@@ -4,6 +4,7 @@ include_once '../includesFrontend/orderFlowBD.php';
 include_once '../sesiones.php';
 comprobar_sesion();
 
+
 // Obtener datos de la URL y de sesión
 $id_mesaURL     = isset($_GET['id_mesa'])     ? intval($_GET['id_mesa'])     : null;
 $id_empleadoURL = isset($_GET['id_empleado']) ? intval($_GET['id_empleado']) : null;
@@ -27,7 +28,6 @@ $nombre_empleado = $_SESSION['nombre_empleado'] ?? '';
         <a href="./zonaApuntaComandas.php" class="btn btn-outline-secondary mb-3">
             &larr; Volver a toma de comanda
         </a>
-
         <h3 class="mb-3 text-center">
             Mesa [nº <?php echo htmlspecialchars($id_mesaURL); ?>] – Camarero: <?php echo htmlspecialchars($nombre_empleado); ?>
         </h3>
@@ -100,6 +100,7 @@ $nombre_empleado = $_SESSION['nombre_empleado'] ?? '';
             </div>
         </div>
     </div>
+
 
     <!-- Se incluye el JS que evita recarga y hace fetch -->
     <script src="../js/formaEvitarRecargaNavegador.js"></script>
