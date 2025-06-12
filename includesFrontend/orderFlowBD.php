@@ -1,6 +1,7 @@
 <?php
    
-    include __DIR__. './conectionDB.php';
+    include(__DIR__ . '/../db/conectionDB.php');
+
     
     error_reporting(0);
     

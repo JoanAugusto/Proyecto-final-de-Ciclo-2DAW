@@ -27,7 +27,7 @@
                 header("Location: ./templates/barraVista.php");
                 break;
             case 'cocinero':
-                header("Location: ./templates/cocinaVista.html");
+                header("Location: ./templates/cocinaVista.php");
                 break;
             default:
                 echo "rol desconocido";

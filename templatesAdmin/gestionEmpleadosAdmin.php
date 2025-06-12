@@ -18,7 +18,7 @@
   <div class="container-fluid">
     <!-- Logo -->
     <a class="navbar-brand" href="#">
-      <!-- Aquí metes tu logo -->
+      
       <strong>Victory Setup</strong>
     </a>
 
@@ -130,8 +130,9 @@
                     
                  
                         foreach($empleados as $empleaditos => $valorCampos){
-                          $urlModificarEmpleado="../gestionEmpleadosAdminModificar.php?id_empleado=".$valorCampos['id_empleado'];
-                          $urlEliminarEmpleado="../eliminarEmpleadoAdmin.php?id_empleado=".$valorCampos['id_empleado'];
+                         
+                          $urlModificarEmpleado="./gestionEmpleadosAdminModificar.php?id_empleado=".$valorCampos['id_empleado'];
+                          $urlEliminarEmpleado="./eliminarEmpleadoAdmin.php?id_empleado=".$valorCampos['id_empleado'];
                           echo "<tr>";
                                 echo " <td>".htmlspecialchars($valorCampos["id_empleado"])."</td>";
                                 echo " <td>".htmlspecialchars($valorCampos["nombre_empleado"])."</td>";
@@ -157,7 +158,7 @@
     </table>
     <?php 
          echo "<div class='text-center mt-4'>";
-                        echo "<a href='../añadirEmpleadoAdmin.php' class='btn btn-success'>Añadir Empleado</a>";
+                        echo "<a href='./añadirEmpleadoAdmin.php' class='btn btn-success'>Añadir Empleado</a>";
                     echo "</div>";
                    
     ?>
