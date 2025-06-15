@@ -1,7 +1,10 @@
 <?php
+session_start();
+
 include_once '../db/conectionDB.php';
 include_once '../includesFrontend/orderFlowBD.php';
 include_once '../sesiones.php';
+
 comprobar_sesion();
 
 
@@ -9,8 +12,8 @@ comprobar_sesion();
 $id_mesaURL     = isset($_GET['id_mesa'])     ? intval($_GET['id_mesa'])     : null;
 $id_empleadoURL = isset($_GET['id_empleado']) ? intval($_GET['id_empleado']) : null;
 $id_comandaURL  = isset($_GET['id_comanda'])  ? intval($_GET['id_comanda'])  : null;
-session_start();
-$nombre_empleado = $_SESSION['nombre_empleado'] ?? '';
+
+$nombre_empleado = $_SESSION['nombre_empleado'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -43,26 +46,30 @@ $nombre_empleado = $_SESSION['nombre_empleado'] ?? '';
                 </tr>
             </thead>
             <tbody>
-                <?php
-                $lineas = load_lineas_comanda_con_productos($conn, $id_comandaURL);
-                if ($lineas !== FALSE) {
-                    foreach ($lineas as $lc) {
-                        echo "
+               <?php
+                    $lineas = load_lineas_comanda_con_productos($conn, $id_comandaURL);
+                    if ($lineas !== FALSE) {
+                        foreach ($lineas as $lc) {
+                    ?>
                         <tr>
-                            <td>{$lc['unidades']}</td>
-                            <td>" . htmlspecialchars($lc['nombre_producto']) . "</td>
-                            <td>€" . number_format($lc['precio_producto'], 2) . "</td>
+                            <td><?= $lc['unidades'] ?></td>
+                            <td><?= htmlspecialchars($lc['nombre_producto']) ?></td>
+                            <td>€<?= number_format($lc['precio_producto'], 2) ?></td>
                             <td>
-                                <form action=\"eliminarUnidadLinea.php\" method=\"POST\" style=\"display:inline;\">
-                                    <input type=\"hidden\" name=\"id_linea\" value=\"{$lc['id_lineacomanda']}\" />
-                                    <button type=\"submit\" class=\"btn btn-sm btn-danger\" title=\"Eliminar 1 unidad\">&minus;</button>
+                                <form action="eliminarUnidades.php" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id_linea" value="<?= $lc['id_lineacomanda'] ?>" />
+                                    <input type="hidden" name="id_mesa" value="<?= $id_mesaURL ?>" />
+                                    <input type="hidden" name="id_comanda" value="<?= $id_comandaURL ?>" />
+                                    <input type="hidden" name="id_empleado" value="<?= $id_empleadoURL ?>" />
+                                    <button type="submit" class="btn btn-sm btn-danger" title="Eliminar 1 unidad">&minus;</button>
                                 </form>
                             </td>
                         </tr>
-                        ";
+                    <?php
+                        }
                     }
-                }
-                ?>
+?>
+
             </tbody>
         </table>
 
@@ -85,9 +92,16 @@ $nombre_empleado = $_SESSION['nombre_empleado'] ?? '';
                 ?>
             </div>
             <div>
-                <form action="vaciarComanda.php" method="POST" style="display:inline;">
-                    <input type="hidden" name="id_comanda" value="<?php echo $id_comandaURL; ?>" />
-                    <button type="submit" class="btn btn-outline-danger me-2">Borrar todo</button>
+                <form action="borrarComandaCompleta.php" method="POST" style="display:inline;">
+                <input type="hidden" name="id_linea" value="<?= $lc['id_lineacomanda'] ?>" />
+                                    
+                                 
+                                    <input type="hidden" name="id_mesa" value="<?= $id_mesaURL ?>" />
+                                    <input type="hidden" name="id_comanda" value="<?= $id_comandaURL ?>" />
+                                    <input type="hidden" name="id_empleado" value="<?= $id_empleadoURL ?>" />
+                                   
+                                   
+                                        <button type="submit" class="btn btn-outline-danger me-2">Borrar todo</button>
                 </form>
 
                 <!-- Este formulario se intercepta en JS -->

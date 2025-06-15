@@ -1,4 +1,6 @@
 <?php
+session_start();
+$nombreEmpleadoSession=$_SESSION['nombre_empleado'];
   include_once '../sesiones.php';
   comprobar_sesion();
 ?>
@@ -26,7 +28,7 @@
   <!-- Bienvenida -->
   <main class="d-flex flex-column justify-content-center align-items-center text-center px-4 flex-grow-1">
       <div class="bg-dark bg-opacity-75 p-5 rounded-4 shadow-lg text-light">
-        <h1 class="display-4 fw-bold text-light">¡Bienvenido, Nombre Usuario!</h1>
+        <h1 class="display-4 fw-bold text-light">¡Bienvenido,<?php echo htmlspecialchars($nombreEmpleadoSession) ?>!</h1>
         <p class="lead text-light">Pulsa el botón superior derecho</p>
         <p class="h5 text-light">para acceder a las funciones de la app</p>
       </div>

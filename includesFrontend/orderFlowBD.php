@@ -42,7 +42,7 @@
 
 }
     function load_empleados_Comprobacion_login($correoEmpleado, $contraseñaEmpleado,$conn){
-        $consultaLoginUser="SELECT correo_empleado,contrasena_empleado,rol_empleado, id_empleado FROM empleado WHERE correo_empleado='$correoEmpleado' 
+        $consultaLoginUser="SELECT correo_empleado,contrasena_empleado,rol_empleado, id_empleado , nombre_empleado FROM empleado WHERE correo_empleado='$correoEmpleado' 
                             AND contrasena_empleado='$contraseñaEmpleado';";
 
         $resultadoLogin=$conn->query($consultaLoginUser);
@@ -415,5 +415,59 @@
     return $comandas;
 }
 
+   function eliminar_unidad_linea_seguro($conn, $idLinea) {
+    // Primero comprobamos si la línea tiene más de 1 unidad
+    $consulta = "
+        SELECT unidades 
+        FROM linea_comanda 
+        WHERE id_lineacomanda = '$idLinea';
+    ";
+    $resultado = $conn->query($consulta);
+    
+    if (!$resultado || $resultado->rowCount() === 0) {
+        return false;
+    }
+
+    $fila = $resultado->fetch(PDO::FETCH_ASSOC);
+
+    if ($fila['unidades'] > 1) {
+        // Reducir en 1
+        $update = "
+            UPDATE linea_comanda 
+            SET unidades = unidades - 1 
+            WHERE id_lineacomanda = '$idLinea';
+        ";
+        return $conn->query($update) !== false;
+    } else {
+        // Eliminar completamente
+        $delete = "
+            DELETE FROM linea_comanda 
+            WHERE id_lineacomanda = '$idLinea';
+        ";
+        return $conn->query($delete) !== false;
+    }
+}
+
+
+function vaciar_lineas_comanda($conn, $id_comanda) {
+    $sql = "
+        DELETE FROM linea_comanda 
+        WHERE id_comanda = '$id_comanda';
+    ";
+    return $conn->query($sql) !== false;
+
+}
+function eliminar_comanda($conn, $id_comanda) {
+    $sql = "
+        DELETE FROM comanda 
+        WHERE id_comanda = '$id_comanda';
+    ";
+    return $conn->query($sql) !== false;
+
+}
+
+
 ?>
+
+
 
