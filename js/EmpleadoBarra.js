@@ -1,5 +1,5 @@
 // Creamos un objeto para guardar las comandas que van llegando, organizadas por su ID.
-// Así podemos tener varias comandas activas a la vez sin que se mezclen.
+// Así podemos tener varias comandas activas a la vez sin que se desaparezcan.
 const comandasPorId = {};
 
 const datosGuardados = localStorage.getItem('comandasBarra');
@@ -25,7 +25,7 @@ socket.addEventListener('open', () => {
 socket.addEventListener('message', (event) => {
   console.log('Mensaje recibido raw:', event.data);
 
-  try {
+  try {  
     // Intentamos convertir ese mensaje (que viene en texto plano) a un objeto JSON.
     const data = JSON.parse(event.data);
     console.log('Mensaje parseado:', data);

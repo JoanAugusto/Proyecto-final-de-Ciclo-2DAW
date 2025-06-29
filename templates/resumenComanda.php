@@ -105,7 +105,7 @@ $nombre_empleado = $_SESSION['nombre_empleado'];
                 </form>
 
                 <!-- Este formulario se intercepta en JS -->
-                <form id="formEnviarComanda" method="POST" style="display:inline;">
+                <form id="formEnviarComanda" class="d-inline" method="POST" ">
                     <input type="hidden" name="id_comanda"     value="<?php echo $id_comandaURL; ?>" />
                     <input type="hidden" name="nombre_empleado" value="<?php echo htmlspecialchars($nombre_empleado); ?>" />
                     <input type="hidden" name="id_mesa"         value="<?php echo $id_mesaURL; ?>" />

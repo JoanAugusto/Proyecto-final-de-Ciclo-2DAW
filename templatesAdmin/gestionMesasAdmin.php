@@ -19,29 +19,7 @@
 
 <!-- CONTENIDO PRINCIPAL -->
 <div class="container my-5">
-  <!-- Filtro -->
-  <div class="card mb-4">
-    <div class="card-body">
-      <form class="row g-3">
-        <div class="col-md-4">
-          <label for="nombreEmpleado" class="form-label">Nombre del empleado</label>
-          <input type="text" class="form-control" id="nombreEmpleado" placeholder="Buscar por nombre">
-        </div>
-        <div class="col-md-4">
-          <label for="rolEmpleado" class="form-label">Rol</label>
-          <select class="form-select" id="rolEmpleado">
-            <option selected>Todos</option>
-            <option>Camarero</option>
-            <option>Cocinero</option>
-            <option>Admin</option>
-          </select>
-        </div>
-        <div class="col-md-4 d-flex align-items-end">
-          <button type="submit" class="btn btn-primary w-100">Filtrar</button>
-        </div>
-      </form>
-    </div>
-  </div>
+  
 
   <!-- Tabla -->
   <div class="table-responsive ">
@@ -66,9 +44,11 @@
                     
                  
                         foreach($mesas as $mesitas => $valorCamposMesa){
-                          $urlModificarMesa="../gestionMesaAdminModificar.php?id_mesa=".$valorCamposMesa['id_mesa'];
+                          $urlModificarMesa="./gestionMesaAdminModificar.php?id_mesa=".$valorCamposMesa['id_mesa'];
                         //   require_once '../gestionMesaAdminModificar.php';
-                          $urlEliminarMesa="../eliminarMesaAdmin.php?id_mesa=".$valorCamposMesa['id_mesa'];
+                          $urlEliminarMesa="./eliminarMesaAdmin.php?id_mesa=".$valorCamposMesa['id_mesa'];
+
+                        
                           echo "<tr>";
                                 echo " <td>".htmlspecialchars($valorCamposMesa["id_mesa"])."</td>";
                                 echo " <td>".htmlspecialchars($valorCamposMesa["zona_mesa"])."</td>";

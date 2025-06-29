@@ -1,10 +1,8 @@
 <?php
-// Aquí podrías verificar sesión si hace falta
-// session_start();
-// if (!isset($_SESSION['admin'])) {
-//     header('Location: login.php');
-//     exit;
-// }
+  require_once '../sesiones.php';
+  require_once '../administrado.php';
+  comprobar_sesion();
+  comprobar_admin();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -24,10 +22,10 @@
     <div class="row justify-content-center">
       <div class="col-12 col-md-8 col-lg-6">
         <div class="list-group text-center">
-          <a href="#" class="list-group-item list-group-item-action">Gestión de Productos</a>
-          <a href="#" class="list-group-item list-group-item-action">Gestión de Mesas</a>
-          <a href="./seccionesAdmin/gestionEmpleadosAdmin.php" class="list-group-item list-group-item-action">Gestión de Empleados</a>
-          <a href="#" class="list-group-item list-group-item-action">Ver Pedidos</a>
+          <a href="./gestionProductosAdmin.php" class="list-group-item list-group-item-action">Gestión de Productos</a>
+          <a href="./gestionMesasAdmin.php" class="list-group-item list-group-item-action">Gestión de Mesas</a>
+          <a href="./gestionEmpleadosAdmin.php" class="list-group-item list-group-item-action">Gestión de Empleados</a>
+          
         </div>
       </div>
     </div>

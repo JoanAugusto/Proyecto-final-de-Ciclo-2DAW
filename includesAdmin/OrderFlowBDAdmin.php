@@ -19,6 +19,37 @@
         return $resultadoEmpleados->fetchAll(PDO::FETCH_ASSOC);
 
     }
+    function load_empleados_filtro($conn, $nombre = '', $rol = 'Todos'){
+    $consulta = "SELECT * FROM empleado WHERE 1=1"; // 1=1 es para facilitar la adición de condiciones WHERE
+
+    $parametros = [];
+
+    if (!empty($nombre)) {
+        $consulta .= " AND nombre_empleado LIKE :nombre OR apellido_empleado LIKE :nombre";
+        $parametros[':nombre'] = '%' . $nombre . '%';
+    }
+
+    if ($rol !== 'Todos') {
+        $consulta .= " AND rol_empleado = :rol";
+        $parametros[':rol'] = $rol;
+    }
+
+    try {
+        $stmt = $conn->prepare($consulta);
+        $stmt->execute($parametros);
+
+        if($stmt->rowCount() === 0){
+            return false; // No se encontraron empleados
+        }
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    } catch (PDOException $e) {
+        // Manejo de errores: puedes loguear el error o devolver un valor que indique el fallo
+        error_log("Error al cargar empleados: " . $e->getMessage());
+        return false;
+    }
+}
 
     function load_empleado($conn,$id_empleado){
 
